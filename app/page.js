@@ -1,65 +1,112 @@
-import Image from "next/image";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Section from "./components/Section";
+import { portfolio } from "@/data/portfolio";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
+    <>
+      <Header />
+
+      <main className="mx-auto max-w-2xl px-6 py-16 sm:py-24">
+        <div className="mb-24 space-y-4">
+          <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">
+            {portfolio.name}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg text-muted">{portfolio.title}</p>
+          <p className="max-w-md leading-relaxed text-muted">
+            {portfolio.tagline}
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="space-y-20">
+          <Section id="about" label="About">
+            <p className="leading-relaxed text-muted">{portfolio.about}</p>
+          </Section>
+
+          <Section id="work" label="Work">
+            <ul className="divide-y divide-border">
+              {portfolio.projects.map((project) => {
+                const content = (
+                  <>
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h2 className="font-medium transition-colors group-hover:text-muted">
+                        {project.title}
+                      </h2>
+                      {project.href && (
+                        <span
+                          aria-hidden="true"
+                          className="text-muted opacity-0 transition-opacity group-hover:opacity-100"
+                        >
+                          &rarr;
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm leading-relaxed text-muted">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="text-xs text-muted">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                );
+
+                return (
+                  <li key={project.title} className="group py-6 first:pt-0">
+                    {project.href ? (
+                      <a
+                        href={project.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block space-y-2"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <div className="space-y-2">{content}</div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </Section>
+
+          <Section id="contact" label="Contact">
+            <div className="space-y-4">
+              <p className="leading-relaxed text-muted">
+                Open to new opportunities and collaborations. Feel free to reach
+                out.
+              </p>
+              <a
+                href={`mailto:${portfolio.email}`}
+                className="inline-block text-sm font-medium underline underline-offset-4 transition-colors hover:text-muted"
+              >
+                {portfolio.email}
+              </a>
+              <ul className="flex gap-6 pt-2">
+                {portfolio.social.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-muted transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Section>
         </div>
       </main>
-    </div>
+
+      <Footer />
+    </>
   );
 }
