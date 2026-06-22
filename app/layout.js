@@ -9,7 +9,7 @@ const inter = Inter({
 export const metadata = {
   title: "Ishfat Abrar Islam",
   description:
-    "Junior Honors Computer Science student at USF. Software development intern and research assistant.",
+    "CEO & Cofounder at IMGNi Labs. Building software at the intersection of AI and creative technology.",
 };
 
 export default function RootLayout({ children }) {

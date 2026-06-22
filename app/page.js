@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Section from "./components/Section";
+import EntryList from "./components/EntryList";
 import { portfolio } from "@/data/portfolio";
 
 export default function Home() {
@@ -24,55 +25,16 @@ export default function Home() {
             <p className="leading-relaxed text-muted">{portfolio.about}</p>
           </Section>
 
-          <Section id="work" label="Work">
-            <ul className="divide-y divide-border">
-              {portfolio.projects.map((project) => {
-                const content = (
-                  <>
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h2 className="font-medium transition-colors group-hover:text-muted">
-                        {project.title}
-                      </h2>
-                      {project.href && (
-                        <span
-                          aria-hidden="true"
-                          className="text-muted opacity-0 transition-opacity group-hover:opacity-100"
-                        >
-                          &rarr;
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="text-xs text-muted">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </>
-                );
+          <Section id="experience" label="Experience">
+            <EntryList items={portfolio.experience} collapsible />
+          </Section>
 
-                return (
-                  <li key={project.title} className="group py-6 first:pt-0">
-                    {project.href ? (
-                      <a
-                        href={project.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block space-y-2"
-                      >
-                        {content}
-                      </a>
-                    ) : (
-                      <div className="space-y-2">{content}</div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+          <Section id="publications" label="Publications">
+            <EntryList items={portfolio.publications} />
+          </Section>
+
+          <Section id="projects" label="Projects">
+            <EntryList items={portfolio.projects} collapsible />
           </Section>
 
           <Section id="contact" label="Contact">
